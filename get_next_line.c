@@ -23,35 +23,37 @@ char *get_next_line(int fd)
 	honey = NULL;
 	a = 1;
 	if(BUFFER_SIZE < 1 || read(fd, 0, 0) < 0)
-		return(0);
-	while(a > 0 && read(fd, buff, BUFFER_SIZE))
 	{
-		printf("\nbuff: |%s|\n", buff);
+		ft_cleaner(buff);
+		return(NULL);
+	}
+		
+	while(a > 0 && (buff[0] || read(fd, buff, BUFFER_SIZE)))
+	{
 		honey = ft_strjoin(honey, buff);
-		printf("\nhoney: |%s|\n", honey);
 		b = -1;
 		c = -1;
 		while(buff[++b])
 		{
 			if(a < 0)
-			{
 				buff[++c] = buff[b];
-			}
 			if(buff[b] == '\n')
 				a = -1;
+			buff[b] ='\0';
 		}
-		buff[b] ='\0';
+		
 	}
-	printf("\nbuff: |%s|\n", buff);
+	
 	return (honey);
 }
 
 int main(int argc,char * args[])
 {
 	int	fd;
+	int	i = 0;
 
 	fd = open("42.txt",O_RDONLY);
 	
-	printf("\nprimeiro|%s|\n", get_next_line(fd));
-	printf(" \nsegundo|%s|\n", get_next_line(fd));
+	while(i < 11)
+		printf("%d linha |%s|",(i++)+ 1, get_next_line(fd));
 }
