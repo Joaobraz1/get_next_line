@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jpedro-o <joaobraz1204@gmail.com>          +#+  +:+       +#+        */
+/*   By: jpedro-o <jpedro-o@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/13 13:27:37 by jpedro-o          #+#    #+#             */
-/*   Updated: 2022/03/13 13:31:10 by jpedro-o         ###   ########.fr       */
+/*   Updated: 2023/01/12 15:31:25 by jpedro-o         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,26 +17,37 @@ size_t	ft_strlen(const char *str)
 	int	i;
 
 	i = 0;
-	while (str[i])
+	while (str[i] && str[i] != '\n')
+		i++;
+	if(str[i] == '\n')
 		i++;
 	return (i);
 }
 
-size_t	ft_strlcpy(char *dst, const char *src, size_t size)
+char	*ft_strjoin(char const *s1, char const *s2)
 {
-	size_t	i;
+	char	*result;
+	int		i;
+	int		j;
 
-	i = 0;
-	if (size > 0)
+	result = malloc((ft_strlen(s1) + ft_strlen(s2) + 1) * sizeof(char));
+	if (!result)
+		return (0);
+	i = -1;
+	while (s1[++i])
+		result[i] = (char)s1[i];
+	j = -1;
+	while (s2[++j])
 	{
-		while (i < size - 1 && src[i])
-		{
-			dst[i] = src[i];
-			i++;
-		}
-		dst[i] = 0;
-	}
-	while (src[i])
+		result[i] = (char)s2[j];
 		i++;
-	return (i);
+	}
+	result[i] = '\0';
+	return ((char *)result);
 }
+// int main()
+// {
+// 	char *ola="ola\ntudo";
+
+// 	printf("%s", ft_strjoin("ola\ntudo", "ok\nman"));
+// }

@@ -14,29 +14,44 @@
 
 char *get_next_line(int fd)
 {
-	static int	i;
-	int 		aux;
-	char 		*value;
-	char		*ret;
+	int			a;
+	int			b;
+	int			c;
+	static char	buff[BUFFER_SIZE + 1];
+	char		*honey;
 
-	if (fd < 0 || BUFFER_SIZE < 1)
-		return (NULL);
-	i = -1;
-	if(!(value = malloc(sizeof(char) * (BUFFER_SIZE + 1))))
-		return(NULL);
-	while (aux = read(fd,value[i + 1], 1) && value[i + 1] != '\n' || value[i + 1] != '\0')
-		i++;
-	value[i] ='\0';
-	ret = malloc(sizeof(char) * (ft_strlen(value) + 1));
-	ret[ft_strlcpy(ret, value, ft_strlen(value))] = '\0';
-	return(ret);
+	honey = NULL;
+	a = 1;
+	if(BUFFER_SIZE < 1 || read(fd, 0, 0) < 0)
+		return(0);
+	while(a > 0 && read(fd, buff, BUFFER_SIZE))
+	{
+		printf("\nbuff: |%s|\n", buff);
+		honey = ft_strjoin(honey, buff);
+		printf("\nhoney: |%s|\n", honey);
+		b = -1;
+		c = -1;
+		while(buff[++b])
+		{
+			if(a < 0)
+			{
+				buff[++c] = buff[b];
+			}
+			if(buff[b] == '\n')
+				a = -1;
+		}
+		buff[b] ='\0';
+	}
+	printf("\nbuff: |%s|\n", buff);
+	return (honey);
 }
 
 int main(int argc,char * args[])
 {
 	int	fd;
 
-	fd = open("42",O_RDONLY);
+	fd = open("42.txt",O_RDONLY);
 	
-	printf("%s", get_next_line(fd));
+	printf("\nprimeiro|%s|\n", get_next_line(fd));
+	printf(" \nsegundo|%s|\n", get_next_line(fd));
 }
