@@ -2,11 +2,11 @@
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
-/*                                                     +:+ +:+         +:+     */
-/*   By: jpedro-o <joaobraz1204@gmail.com>          +#+  +:+       +#+        */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jpedro-o <jpedro-o@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/13 12:11:51 by jpedro-o          #+#    #+#             */
-/*   Updated: 2022/03/13 13:40:01 by jpedro-o         ###   ########.fr       */
+/*   Updated: 2023/01/13 15:44:09 by jpedro-o         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,12 @@ char *get_next_line(int fd)
 
 	honey = NULL;
 	a = 1;
+	printf("\nbuffer=%s\n",buff);
 	if(BUFFER_SIZE < 1 || read(fd, 0, 0) < 0)
 	{
 		ft_cleaner(buff);
 		return(NULL);
 	}
-		
 	while(a > 0 && (buff[0] || read(fd, buff, BUFFER_SIZE)))
 	{
 		honey = ft_strjoin(honey, buff);
@@ -41,9 +41,7 @@ char *get_next_line(int fd)
 				a = -1;
 			buff[b] ='\0';
 		}
-		
 	}
-	
 	return (honey);
 }
 
